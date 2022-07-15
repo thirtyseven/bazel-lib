@@ -1,0 +1,18 @@
+load(":stamp_aware_rule.bzl", "my_stamp_aware_rule")
+
+my_stamp_aware_rule(
+    name = "test_stamped",
+    out = "always",
+    stamp = 1,
+)
+
+my_stamp_aware_rule(
+    name = "test_unstamped",
+    out = "never",
+    stamp = 0,
+)
+
+my_stamp_aware_rule(
+    name = "test_default",
+    out = "default",
+)
