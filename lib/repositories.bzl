@@ -4,6 +4,7 @@ load("//lib/private:jq_toolchain.bzl", "JQ_PLATFORMS", "jq_host_alias_repo", "jq
 load("//lib/private:yq_toolchain.bzl", "YQ_PLATFORMS", "yq_host_alias_repo", "yq_platform_repo", "yq_toolchains_repo", _DEFAULT_YQ_VERSION = "DEFAULT_YQ_VERSION")
 load("//lib/private:copy_to_directory_toolchain.bzl", "COPY_TO_DIRECTORY_PLATFORMS", "copy_to_directory_platform_repo", "copy_to_directory_toolchains_repo")
 load("//lib/private:coreutils_toolchain.bzl", "COREUTILS_PLATFORMS", "coreutils_platform_repo", "coreutils_toolchains_repo", _DEFAULT_COREUTILS_VERSION = "DEFAULT_COREUTILS_VERSION")
+load("//lib/private:tar_toolchain.bzl", "tar_toolchains_repo")
 load("//lib/private:copy_directory_toolchain.bzl", "COPY_DIRECTORY_PLATFORMS", "copy_directory_platform_repo", "copy_directory_toolchains_repo")
 load("//lib/private:expand_template_toolchain.bzl", "EXPAND_TEMPLATE_PLATFORMS", "expand_template_platform_repo", "expand_template_toolchains_repo")
 load("//lib/private:local_config_platform.bzl", "local_config_platform")
@@ -43,8 +44,9 @@ def aspect_bazel_lib_dependencies(override_local_config_platform = False):
     # Always register the expand_template toolchain
     register_expand_template_toolchains()
 
-    # Always register the coreutils toolchain
+    # Always register the coreutils toolchain and the tar toolchain
     register_coreutils_toolchains()
+    register_tar_toolchains()
 
 # Re-export the default versions
 DEFAULT_JQ_VERSION = _DEFAULT_JQ_VERSION
@@ -99,6 +101,13 @@ def register_yq_toolchains(name = "yq", version = DEFAULT_YQ_VERSION, register =
     yq_toolchains_repo(
         name = "%s_toolchains" % name,
         user_repository_name = name,
+    )
+
+def register_tar_toolchains(name = "gnu_tar", register = True):
+    if register:
+        native.register_toolchains("@%s//:tar_toolchain" % name)
+    tar_toolchains_repo(
+        name = name,
     )
 
 def register_coreutils_toolchains(name = "coreutils", version = DEFAULT_COREUTILS_VERSION, register = True):

@@ -1,0 +1,22 @@
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@aspect_bazel_lib//lib:testing.bzl", "assert_archive_contains")
+
+write_file(
+    name = "gen_a",
+    out = "a",
+    content = ["hello a"],
+)
+
+genrule(
+    name = "tar_a",
+    srcs = ["a"],
+    outs = ["a.tar"],
+    cmd = "$(TAR_BIN) -C $(BINDIR) --create --dereference --file $@ $(rootpath a)",
+    toolchains = ["@gnu_tar//:resolved_toolchain"],
+)
+
+assert_archive_contains(
+    name = "check_a",
+    archive = "a.tar",
+    expected = ["tar/a"],
+)
