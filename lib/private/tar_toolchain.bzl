@@ -15,7 +15,7 @@ def _tar_toolchain_impl(ctx):
     # Make the $(TAR_BIN) variable available in places like genrules.
     # See https://docs.bazel.build/versions/main/be/make-variables.html#custom_variables
     template_variables = platform_common.TemplateVariableInfo({
-        "TAR_BIN": command,
+        "GNU_TAR_BIN": command,
     })
 
     # default_info = DefaultInfo(

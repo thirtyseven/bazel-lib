@@ -11,7 +11,7 @@ genrule(
     name = "tar_a",
     srcs = ["a"],
     outs = ["a.tar"],
-    cmd = "$(TAR_BIN) -C $(BINDIR) --create --dereference --file $@ $(rootpath a)",
+    cmd = "$(GNU_TAR_BIN) -C $(BINDIR) --create --dereference --file $@ $(rootpath a)",
     toolchains = ["@gnu_tar//:resolved_toolchain"],
 )
 
