@@ -250,6 +250,11 @@ bzl_library(
 )
 
 bzl_library(
+    name = "gnu_tar_toolchain",
+    srcs = ["//lib/private:gnu_tar_toolchain.bzl"],
+)
+
+bzl_library(
     name = "expand_template_toolchain",
     srcs = ["//lib/private:expand_template_toolchain.bzl"],
     deps = ["//lib:stamping"],
