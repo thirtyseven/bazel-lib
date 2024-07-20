@@ -83,6 +83,9 @@ def _platform_transition_binary_impl(ctx):
             runfiles = runfiles,
             executable = new_executable,
         ),
+        RunEnvironmentInfo(
+            environment = ctx.attr.env,
+        ),
     )
 
     return result
@@ -94,6 +97,7 @@ _platform_transition_attrs = {
         doc = "The target platform to transition the binary.",
         mandatory = True,
     ),
+    "env": attr.string_dict(),
     "_allowlist_function_transition": attr.label(
         default = "@bazel_tools//tools/allowlists/function_transition_allowlist",
     ),
